@@ -20,7 +20,7 @@ const LoginPage = () => {
       toast.success('Login realizado com sucesso!');
       navigate('/');
     } else {
-      toast.error('E-mail não encontrado. Tente: admin@projeto.com, ana@aluno.com ou roberto@mentor.com');
+      toast.error('E-mail não encontrado. Tente: admin@projeto.com');
     }
   };
 
