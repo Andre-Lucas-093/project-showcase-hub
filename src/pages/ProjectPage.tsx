@@ -11,7 +11,6 @@ const ProjectPage = () => {
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<Project | null>(null);
   const [owner, setOwner] = useState<User | null>(null);
-  const [members, setMembers] = useState<{ user?: User }[]>([]);
   const [documents, setDocuments] = useState<ProjectDocument[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,11 +18,9 @@ const ProjectPage = () => {
     if (!id) return;
     Promise.all([
       api.getProject(id),
-      api.getProjectMembers(id),
       api.getProjectDocuments(id),
-    ]).then(async ([proj, mems, docs]) => {
+    ]).then(async ([proj, docs]) => {
       setProject(proj || null);
-      setMembers(mems);
       setDocuments(docs);
       if (proj) {
         const o = await api.getUser(proj.dono_id);
@@ -59,38 +56,20 @@ const ProjectPage = () => {
 
         <p className="text-foreground/90 leading-relaxed mb-8">{project.descricao}</p>
 
-        {/* Owner & Members */}
-        <div className="grid sm:grid-cols-2 gap-6 mb-8">
-          <div>
-            <h2 className="font-display font-semibold text-sm text-muted-foreground uppercase tracking-wider mb-3">Dono do Projeto</h2>
-            {owner && (
-              <div className="flex items-center gap-3 p-3 bg-surface-subtle rounded-lg">
-                <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
-                  <UserIcon className="h-4 w-4 text-primary" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium">{owner.nome}</p>
-                  <p className="text-xs text-muted-foreground">{owner.papel}</p>
-                </div>
+        {/* Owner */}
+        <div className="mb-8">
+          <h2 className="font-display font-semibold text-sm text-muted-foreground uppercase tracking-wider mb-3">Dono do Projeto</h2>
+          {owner && (
+            <div className="flex items-center gap-3 p-3 bg-surface-subtle rounded-lg max-w-xs">
+              <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center">
+                <UserIcon className="h-4 w-4 text-primary" />
               </div>
-            )}
-          </div>
-          <div>
-            <h2 className="font-display font-semibold text-sm text-muted-foreground uppercase tracking-wider mb-3">Membros ({members.length})</h2>
-            <div className="space-y-2">
-              {members.map((m, i) => m.user && (
-                <div key={i} className="flex items-center gap-3 p-3 bg-surface-subtle rounded-lg">
-                  <div className="h-9 w-9 rounded-full bg-accent/10 flex items-center justify-center">
-                    <UserIcon className="h-4 w-4 text-accent" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">{m.user.nome}</p>
-                    <p className="text-xs text-muted-foreground">{m.user.papel}</p>
-                  </div>
-                </div>
-              ))}
+              <div>
+                <p className="text-sm font-medium">{owner.nome}</p>
+                <p className="text-xs text-muted-foreground">{owner.papel}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Documents */}
