@@ -11,7 +11,6 @@ const ProjectPage = () => {
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<Project | null>(null);
   const [owner, setOwner] = useState<User | null>(null);
-  const [members, setMembers] = useState<{ user?: User }[]>([]);
   const [documents, setDocuments] = useState<ProjectDocument[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,11 +18,9 @@ const ProjectPage = () => {
     if (!id) return;
     Promise.all([
       api.getProject(id),
-      api.getProjectMembers(id),
       api.getProjectDocuments(id),
-    ]).then(async ([proj, mems, docs]) => {
+    ]).then(async ([proj, docs]) => {
       setProject(proj || null);
-      setMembers(mems);
       setDocuments(docs);
       if (proj) {
         const o = await api.getUser(proj.dono_id);
