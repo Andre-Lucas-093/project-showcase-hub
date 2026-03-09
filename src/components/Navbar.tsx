@@ -12,7 +12,7 @@ const Navbar = () => {
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg text-foreground">
           <Beaker className="h-5 w-5 text-primary" />
-          ProjetoExpo
+          Extensão Unifeso
         </Link>
 
         <nav className="flex items-center gap-3">
