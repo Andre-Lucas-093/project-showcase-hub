@@ -20,7 +20,7 @@ const LoginPage = () => {
       toast.success('Login realizado com sucesso!');
       navigate('/');
     } else {
-      toast.error('E-mail não encontrado. Tente: admin@projeto.com, ana@aluno.com ou roberto@mentor.com');
+      toast.error('E-mail não encontrado. Tente: admin@projeto.com');
     }
   };
 
@@ -50,10 +50,8 @@ const LoginPage = () => {
         </form>
 
         <div className="mt-6 p-3 bg-surface-subtle rounded-lg text-xs text-muted-foreground">
-          <p className="font-medium mb-1">Contas de teste:</p>
+          <p className="font-medium mb-1">Conta de teste:</p>
           <p>admin@projeto.com (admin)</p>
-          <p>ana@aluno.com (aluno)</p>
-          <p>roberto@mentor.com (mentor)</p>
           <p className="mt-1 opacity-70">Qualquer senha funciona.</p>
         </div>
       </div>
