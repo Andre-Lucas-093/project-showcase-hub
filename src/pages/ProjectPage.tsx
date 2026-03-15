@@ -7,6 +7,21 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calendar, User as UserIcon, FileText, Download, Eye, Layers } from 'lucide-react';
 import defaultLogo from '@/assets/default-project-logo.png';
 
+const getDocumentName = (doc: ProjectDocument): string => {
+  if (!doc.url_arquivo || doc.url_arquivo === '#') {
+    return `Documento #${doc.documento_id}`;
+  }
+
+  try {
+    const parsedUrl = new URL(doc.url_arquivo);
+    const file = parsedUrl.pathname.split('/').filter(Boolean).pop();
+    return file ? decodeURIComponent(file) : `Documento #${doc.documento_id}`;
+  } catch {
+    const file = doc.url_arquivo.split('/').filter(Boolean).pop();
+    return file || `Documento #${doc.documento_id}`;
+  }
+};
+
 const ProjectPage = () => {
   const { id } = useParams<{ id: string }>();
   const [project, setProject] = useState<Project | null>(null);
@@ -22,7 +37,7 @@ const ProjectPage = () => {
     ]).then(async ([proj, docs]) => {
       setProject(proj || null);
       setDocuments(docs);
-      if (proj) {
+      if (proj?.dono_id != null) {
         const o = await api.getUser(proj.dono_id);
         setOwner(o || null);
       }
@@ -48,13 +63,13 @@ const ProjectPage = () => {
               <StatusBadge status={project.status} />
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground flex-wrap">
-              <span className="flex items-center gap-1"><Layers className="h-4 w-4" />{project.area}</span>
-              <span className="flex items-center gap-1"><Calendar className="h-4 w-4" />Prazo: {project.prazo_final}</span>
+              <span className="flex items-center gap-1"><Layers className="h-4 w-4" />{project.area || 'Sem área'}</span>
+              <span className="flex items-center gap-1"><Calendar className="h-4 w-4" />Prazo: {project.prazo_final || 'Não definido'}</span>
             </div>
           </div>
         </div>
 
-        <p className="text-foreground/90 leading-relaxed mb-8">{project.descricao}</p>
+        <p className="text-foreground/90 leading-relaxed mb-8">{project.descricao || 'Sem descrição disponível.'}</p>
 
         {/* Owner */}
         <div className="mb-8">
@@ -82,13 +97,17 @@ const ProjectPage = () => {
                   <div className="flex items-center gap-3 min-w-0">
                     <FileText className="h-5 w-5 text-muted-foreground shrink-0" />
                     <div className="min-w-0">
-                      <p className="text-sm font-medium truncate">{doc.nome_arquivo}</p>
-                      <p className="text-xs text-muted-foreground">Enviado em {doc.data_envio}</p>
+                      <p className="text-sm font-medium truncate">{getDocumentName(doc)}</p>
+                      <p className="text-xs text-muted-foreground">Enviado em {doc.data_envio || 'Data não informada'}</p>
                     </div>
                   </div>
                   <div className="flex gap-1 shrink-0">
-                    <Button variant="ghost" size="sm"><Eye className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="sm"><Download className="h-4 w-4" /></Button>
+                    <Button variant="ghost" size="sm" disabled={!doc.url_arquivo || doc.url_arquivo === '#'}>
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm" disabled={!doc.url_arquivo || doc.url_arquivo === '#'}>
+                      <Download className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
               ))}

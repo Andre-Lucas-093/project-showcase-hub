@@ -28,16 +28,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             <StatusBadge status={project.status} />
           </div>
           <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-            {project.descricao}
+            {project.descricao || 'Sem descrição disponível.'}
           </p>
           <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1">
               <Layers className="h-3.5 w-3.5" />
-              {project.area}
+              {project.area || 'Sem área'}
             </span>
             <span className="flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5" />
-              {project.prazo_final}
+              {project.prazo_final || 'Não definido'}
             </span>
           </div>
         </div>

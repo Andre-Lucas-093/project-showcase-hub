@@ -9,7 +9,7 @@ export const login = async (req: Request, res: Response) => {
     return;
   }
 
-  const user = userModel.findByEmail(email);
+  const user = await userModel.findByEmail(email);
   if (!user) {
     res.status(401).json({ error: 'Usuário não encontrado' });
     return;
@@ -31,15 +31,16 @@ export const register = async (req: Request, res: Response) => {
     return;
   }
 
-  const existing = userModel.findByEmail(email);
+  const existing = await userModel.findByEmail(email);
   if (existing) {
     res.status(409).json({ error: 'E-mail já cadastrado' });
     return;
   }
 
-  const user = userModel.insert({
+  const user = await userModel.insert({
     nome,
     email,
+    senha: '',
     papel: papel || 'aluno',
     bio_perfil: bio_perfil || '',
   });

@@ -4,6 +4,7 @@ import { projectsRouter } from './projects.js';
 import { usersRouter } from './users.js';
 import { membersRouter } from './members.js';
 import { documentsRouter } from './documents.js';
+import { coursesRouter } from './courses.js';
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use('/projects', projectsRouter);
 router.use('/users', usersRouter);
 router.use('/members', membersRouter);
 router.use('/documents', documentsRouter);
+router.use('/courses', coursesRouter);
 
 export { router };

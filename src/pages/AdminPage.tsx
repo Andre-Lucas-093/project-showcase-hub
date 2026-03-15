@@ -17,7 +17,7 @@ const AdminPage = () => {
   const navigate = useNavigate();
   const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<number | null>(null);
 
   // Form state
   const [titulo, setTitulo] = useState('');
@@ -44,11 +44,16 @@ const AdminPage = () => {
   };
 
   const handleEdit = (p: Project) => {
-    setTitulo(p.titulo); setDescricao(p.descricao); setArea(p.area); setStatus(p.status); setLogo(p.logo); setPrazoFinal(p.prazo_final);
+    setTitulo(p.titulo);
+    setDescricao(p.descricao || '');
+    setArea(p.area || '');
+    setStatus(p.status);
+    setLogo(p.logo || '');
+    setPrazoFinal(p.prazo_final || '');
     setEditingId(p.projeto_id); setShowForm(true);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: number) => {
     await api.deleteProject(id);
     toast.success('Projeto removido.');
     loadProjects();
@@ -57,10 +62,25 @@ const AdminPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (editingId) {
-      await api.updateProject(editingId, { titulo, descricao, area, status, logo, prazo_final: prazoFinal });
+      await api.updateProject(editingId, {
+        titulo,
+        descricao,
+        area,
+        status,
+        logo: logo || null,
+        prazo_final: prazoFinal || null,
+      });
       toast.success('Projeto atualizado.');
     } else {
-      await api.createProject({ titulo, descricao, area, status, logo, prazo_final: prazoFinal, dono_id: user!.usuario_id });
+      await api.createProject({
+        titulo,
+        descricao,
+        area,
+        status,
+        logo: logo || null,
+        prazo_final: prazoFinal || null,
+        dono_id: user!.usuario_id,
+      });
       toast.success('Projeto criado.');
     }
     resetForm();
@@ -203,7 +223,7 @@ const AdminPage = () => {
                 <span className="font-medium text-sm truncate">{p.titulo}</span>
                 <StatusBadge status={p.status} />
               </div>
-              <p className="text-xs text-muted-foreground mt-0.5">{p.area}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{p.area || 'Sem área'}</p>
             </div>
             <div className="flex gap-1 shrink-0 ml-3">
               <Button variant="ghost" size="sm" onClick={() => handleEdit(p)}>

@@ -1,7 +1,25 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTheme } from '@/components/theme-provider';
 import { Button } from '@/components/ui/button';
-import { LogIn, LogOut, Shield, Beaker } from 'lucide-react';
+import { LogIn, LogOut, Shield, Beaker, Moon, Sun } from 'lucide-react';
+
+export function ModeToggle() {
+  const { theme, setTheme } = useTheme()
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      title="Alternar tema"
+    >
+      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+      <span className="sr-only">Alternar tema</span>
+    </Button>
+  )
+}
 
 const Navbar = () => {
   const { user, logout, isAdmin } = useAuth();
@@ -16,6 +34,7 @@ const Navbar = () => {
         </Link>
 
         <nav className="flex items-center gap-3">
+          <ModeToggle />
           {isAdmin && (
             <Button variant="ghost" size="sm" onClick={() => navigate('/admin')} className="gap-1.5 text-sm">
               <Shield className="h-4 w-4" />
