@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { Menu, X } from 'lucide-react'
 
+import VaporizeTextCycle, { Tag } from './vapour-text-effect'
+import { GradientButton } from './gradient-button'
+
 interface NavigationItem {
   name: string
   href: string
@@ -110,23 +113,19 @@ export function HeroLanding(props: HeroLandingProps) {
   const renderCallToAction = (cta: CallToAction, index: number) => {
     if (cta.variant === 'primary') {
       return (
-        <a
-          key={index}
-          href={cta.href}
-          className="rounded-lg bg-primary px-3 py-2 sm:px-3.5 sm:py-2.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring transition-colors"
-        >
-          {cta.text}
-        </a>
+        <GradientButton key={index} asChild size="default">
+          <a href={cta.href}>
+            {cta.text}
+          </a>
+        </GradientButton>
       )
     } else {
       return (
-        <a
-          key={index}
-          href={cta.href}
-          className="text-xs sm:text-sm/6 font-semibold text-foreground hover:text-muted-foreground transition-colors"
-        >
-          {cta.text} <span aria-hidden="true">→</span>
-        </a>
+        <GradientButton key={index} asChild variant="variant" size="default">
+          <a href={cta.href}>
+            {cta.text} <span aria-hidden="true" className="ml-2">→</span>
+          </a>
+        </GradientButton>
       )
     }
   }
@@ -278,11 +277,38 @@ export function HeroLanding(props: HeroLandingProps) {
             </div>
           )}
           
-          <div className="text-center mb-16">
-            <h1 className={`${getTitleSizeClasses()} font-semibold tracking-tight text-balance text-foreground drop-shadow-sm`}>
-              {title}
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 max-w-2xl mx-auto">
+          <div className="text-center mb-16 relative w-full flex flex-col items-center">
+            {title === "Projetos Acadêmicos" ? (
+              <div className="h-[100px] w-full max-w-[800px] sm:h-[120px] flex justify-center items-center relative -top-6">
+                <VaporizeTextCycle
+                  texts={["Projetos de Extensão", "Projetos Acadêmicos", "Inovações do UNIFESO"]}
+                  font={{
+                      fontFamily: "Space Grotesk, sans-serif",
+                      fontSize: "56px",
+                      fontWeight: 700
+                  }}
+                  color="rgb(16, 185, 129)"
+                  spread={3}
+                  density={5}
+                  animation={{
+                      vaporizeDuration: 2,
+                      fadeInDuration: 1,
+                      waitDuration: 2
+                  }}
+                  direction="left-to-right"
+                  alignment="center"
+                  tag={Tag.H1}
+                />
+              </div>
+            ) : (
+              <h1 className={`${getTitleSizeClasses()} font-semibold tracking-tight text-balance text-foreground drop-shadow-sm`}>
+                {title}
+              </h1>
+            )}
+            <p 
+              className="mt-2 sm:mt-4 text-base sm:text-lg font-medium text-pretty text-muted-foreground sm:text-xl/8 max-w-2xl mx-auto dark:text-emerald-300"
+              style={{ textShadow: "0 0 10px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3)" }}
+            >
               {description}
             </p>
             

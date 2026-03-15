@@ -103,10 +103,20 @@ INSERT INTO cursos (id, nome, categoria, modalidade) VALUES
   (6, 'Fisioterapia', 'graduacao', 'presencial'),
   (7, 'Medicina', 'graduacao', 'presencial'),
   (8, 'Medicina Veterinária', 'graduacao', 'presencial'),
-  (9, 'Nutrição', 'graduacao', 'presencial'),
+  (9, 'Nutrição', 'graduacao', 'hibrido'),
   (10, 'Odontologia', 'graduacao', 'presencial'),
   (11, 'Psicologia', 'graduacao', 'presencial'),
-  (12, 'Biomedicina', 'graduacao', 'presencial');
+  (12, 'Biomedicina', 'graduacao', 'hibrido'),
+  (13, 'Educação Física', 'graduacao', 'hibrido'),
+  (14, 'Farmácia', 'graduacao', 'hibrido'),
+  (15, 'Fonoaudiologia', 'graduacao', 'hibrido'),
+  (16, 'Pedagogia', 'graduacao', 'hibrido'),
+  (21, 'Administração', 'graduacao', 'ead'),
+  (22, 'Ciências Contábeis', 'graduacao', 'ead'),
+  (23, 'Tecnologia em Análise e Desenvolvimento de Sistemas', 'graduacao', 'ead'),
+  (24, 'Tecnologia em Gestão Ambiental', 'graduacao', 'ead'),
+  (25, 'Tecnologia em Gestão de Recursos Humanos', 'graduacao', 'ead'),
+  (26, 'Tecnologia em Marketing', 'graduacao', 'ead');
 
 INSERT INTO projetos (projeto_id, logo, titulo, descricao, status, curso_id, criado_em, atualizado_em, dono_id, prazo_final)
 VALUES

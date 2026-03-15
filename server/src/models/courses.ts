@@ -55,6 +55,20 @@ function inferCategory(nome: string): CourseCategory {
   return 'graduacao';
 }
 
+function inferModalidade(nome: string): 'presencial' | 'hibrido' | 'ead' | undefined {
+  const normalized = normalizeLabel(nome);
+  
+  const hibridos = ['biomedicina', 'educacao fisica', 'farmacia', 'fonoaudiologia', 'nutricao', 'pedagogia'];
+  const eads = ['administracao', 'ciencias contabeis', 'tecnologia em analise e desenvolvimento de sistemas', 'tecnologia em gestao ambiental', 'tecnologia em gestao de recursos humanos', 'tecnologia em marketing'];
+  const presenciais = ['arquitetura e urbanismo', 'ciencia da computacao', 'direito', 'enfermagem', 'engenharia civil', 'fisioterapia', 'medicina', 'medicina veterinaria', 'odontologia', 'psicologia'];
+  
+  if (hibridos.includes(normalized)) return 'hibrido';
+  if (eads.includes(normalized)) return 'ead';
+  if (presenciais.includes(normalized)) return 'presencial';
+  
+  return undefined;
+}
+
 function aggregateCoursesFromProjects(
   projects: Array<{ area?: string | null; status: 'concluido' | 'andamento' | 'disponivel' }>,
 ): CourseSummary[] {
@@ -70,6 +84,7 @@ function aggregateCoursesFromProjects(
       map.set(nome, {
         nome,
         categoria: inferCategory(nome),
+        modalidade: inferModalidade(nome),
         total_extensoes: 0,
         disponiveis: 0,
         andamento: 0,

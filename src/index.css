@@ -59,6 +59,29 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --app-bg-color: #f7f4ee;
+    --app-bg-grad-start: #f8f5ef;
+    --app-bg-grad-mid: #edf8f1;
+    --app-bg-grad-end: #dff3e6;
+    --app-bg-glow-1: hsla(142, 65%, 55%, 0.18);
+    --app-bg-glow-2: hsla(158, 67%, 45%, 0.12);
+
+    --gb-color-1: #f7f5ef;
+    --gb-color-2: #edf8f1;
+    --gb-color-3: #ccf1d8;
+    --gb-color-4: #22c55e;
+    --gb-color-5: #166534;
+    --gb-border-color-1: hsla(142, 70%, 96%, 0.9);
+    --gb-border-color-2: hsla(142, 74%, 30%, 0.5);
+
+    --gbv-color-1: #f5f2ea;
+    --gbv-color-2: #e8f6ed;
+    --gbv-color-3: #bdeccf;
+    --gbv-color-4: #16a34a;
+    --gbv-color-5: #14532d;
+    --gbv-border-color-1: hsla(143, 72%, 95%, 0.86);
+    --gbv-border-color-2: hsla(143, 68%, 27%, 0.54);
   }
 
   .dark {
@@ -91,6 +114,29 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --app-bg-color: hsl(220 25% 6%);
+    --app-bg-grad-start: hsl(220 25% 6%);
+    --app-bg-grad-mid: hsl(220 25% 6%);
+    --app-bg-grad-end: hsl(220 25% 6%);
+    --app-bg-glow-1: hsla(150, 60%, 50%, 0);
+    --app-bg-glow-2: hsla(150, 60%, 50%, 0);
+
+    --gb-color-1: #022c22;
+    --gb-color-2: #064e3b;
+    --gb-color-3: #047857;
+    --gb-color-4: #10b981;
+    --gb-color-5: #34d399;
+    --gb-border-color-1: hsla(150, 78%, 90%, 0.1);
+    --gb-border-color-2: hsla(150, 75%, 90%, 0.6);
+
+    --gbv-color-1: #022c22;
+    --gbv-color-2: #064e3b;
+    --gbv-color-3: #10b981;
+    --gbv-color-4: #a7f3d0;
+    --gbv-color-5: #000000;
+    --gbv-border-color-1: hsla(150, 75%, 90%, 0.2);
+    --gbv-border-color-2: hsla(150, 50%, 90%, 0.75);
   }
 }
 
@@ -100,8 +146,14 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
     font-family: var(--font-body);
+    background-color: var(--app-bg-color);
+    background-image:
+      radial-gradient(1200px circle at 0% 0%, var(--app-bg-glow-1), transparent 60%),
+      radial-gradient(900px circle at 100% 20%, var(--app-bg-glow-2), transparent 55%),
+      linear-gradient(135deg, var(--app-bg-grad-start) 0%, var(--app-bg-grad-mid) 52%, var(--app-bg-grad-end) 100%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -112,5 +164,142 @@
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+  }
+}
+
+@layer base {
+  @property --pos-x { syntax: '<percentage>'; initial-value: 11.14%; inherits: false; }
+  @property --pos-y { syntax: '<percentage>'; initial-value: 140%; inherits: false; }
+  @property --spread-x { syntax: '<percentage>'; initial-value: 150%; inherits: false; }
+  @property --spread-y { syntax: '<percentage>'; initial-value: 180.06%; inherits: false; }
+  @property --color-1 { syntax: '<color>'; initial-value: #022c22; inherits: false; }
+  @property --color-2 { syntax: '<color>'; initial-value: #064e3b; inherits: false; }
+  @property --color-3 { syntax: '<color>'; initial-value: #047857; inherits: false; }
+  @property --color-4 { syntax: '<color>'; initial-value: #10b981; inherits: false; }
+  @property --color-5 { syntax: '<color>'; initial-value: #34d399; inherits: false; }
+  @property --border-angle { syntax: '<angle>'; initial-value: 20deg; inherits: true; }
+  @property --border-color-1 { syntax: '<color>'; initial-value: hsla(140, 75%, 60%, 0.2); inherits: true; }
+  @property --border-color-2 { syntax: '<color>'; initial-value: hsla(140, 75%, 40%, 0.75); inherits: true; }
+  @property --stop-1 { syntax: '<percentage>'; initial-value: 37.35%; inherits: false; }
+  @property --stop-2 { syntax: '<percentage>'; initial-value: 61.36%; inherits: false; }
+  @property --stop-3 { syntax: '<percentage>'; initial-value: 78.42%; inherits: false; }
+  @property --stop-4 { syntax: '<percentage>'; initial-value: 89.52%; inherits: false; }
+  @property --stop-5 { syntax: '<percentage>'; initial-value: 100%; inherits: false; }
+}
+
+@layer components {
+  @keyframes aurora-borealis {
+    0% {
+      --pos-x: 10%;
+      --pos-y: 110%;
+      --spread-x: 145%;
+      --spread-y: 165%;
+      --border-angle: 175deg;
+    }
+
+    50% {
+      --pos-x: 62%;
+      --pos-y: 42%;
+      --spread-x: 170%;
+      --spread-y: 120%;
+      --border-angle: 220deg;
+    }
+
+    100% {
+      --pos-x: 25%;
+      --pos-y: 78%;
+      --spread-x: 135%;
+      --spread-y: 148%;
+      --border-angle: 255deg;
+    }
+  }
+
+  .gradient-button {
+    @apply relative appearance-none cursor-pointer;
+    --color-1: var(--gb-color-1);
+    --color-2: var(--gb-color-2);
+    --color-3: var(--gb-color-3);
+    --color-4: var(--gb-color-4);
+    --color-5: var(--gb-color-5);
+    --border-color-1: var(--gb-border-color-1);
+    --border-color-2: var(--gb-border-color-2);
+    background: radial-gradient(
+      var(--spread-x) var(--spread-y) at var(--pos-x) var(--pos-y),
+      var(--color-1) var(--stop-1),
+      var(--color-2) var(--stop-2),
+      var(--color-3) var(--stop-3),
+      var(--color-4) var(--stop-4),
+      var(--color-5) var(--stop-5)
+    );
+    transition:
+      --pos-x 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --pos-y 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --spread-x 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --spread-y 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --color-1 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --color-2 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --color-3 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --color-4 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --color-5 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --border-angle 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --border-color-1 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --border-color-2 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --stop-1 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --stop-2 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --stop-3 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --stop-4 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      --stop-5 1.15s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.35s ease,
+      box-shadow 0.35s ease;
+    border-radius: 0.5rem;
+    transform: translateY(0);
+    box-shadow: 0 8px 22px -16px hsla(152, 76%, 35%, 0.45);
+  }
+
+  .gradient-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient( var(--border-angle), var(--border-color-1), var(--border-color-2) );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .gradient-button:hover,
+  .gradient-button:focus-visible,
+  .gradient-button:active {
+    animation: aurora-borealis 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+    transform: translateY(-1px);
+    box-shadow: 0 18px 34px -18px hsla(152, 76%, 42%, 0.55);
+  }
+
+  .gradient-button:active {
+    transform: translateY(0);
+  }
+
+  .gradient-button-variant {
+    --color-1: var(--gbv-color-1);
+    --color-2: var(--gbv-color-2);
+    --color-3: var(--gbv-color-3);
+    --color-4: var(--gbv-color-4);
+    --color-5: var(--gbv-color-5);
+    --border-angle: 200deg;
+    --border-color-1: var(--gbv-border-color-1);
+    --border-color-2: var(--gbv-border-color-2);
+  }
+
+  .gradient-button-variant:hover,
+  .gradient-button-variant:focus-visible,
+  .gradient-button-variant:active {
+    --pos-x: 18%;
+    --pos-y: 72%;
+    --spread-x: 140%;
+    --spread-y: 135%;
+    --border-angle: 225deg;
   }
 }
